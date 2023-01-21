@@ -2,6 +2,8 @@
 
 int main (int ac, char **av)
 {
+	(void)ac;
+	(void)av;
 	int res;
 	Server	new_server = Server(6667, "password");
 
@@ -9,7 +11,7 @@ int main (int ac, char **av)
 	if (res < 0)
 	{
 		perror("Ca marche pas\n");
-		reurn -1;
+		return -1;
 	}
 
 	return 0;

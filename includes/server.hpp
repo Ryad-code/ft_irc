@@ -1,7 +1,6 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
-# include "ircserv.hpp"
 # include "socket.hpp"
 
 struct User
@@ -29,10 +28,10 @@ class Server
 		~Server(void);
 
 		//Getters
-		const Socket		get_socket(void) const;
-		const int		get_port(void) const;
-		const std::string	get_password(void) const;
-		const int		get_nb_user(void) const;
+		Socket		get_socket(void) const;
+		int		get_port(void) const;
+		std::string	get_password(void) const;
+		int		get_nb_user(void) const;
 
 		//Start Server
 		int			start_server(void);

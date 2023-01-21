@@ -9,19 +9,19 @@ Server::~Server(void)
 {
 }
 //Getters
-const Socket		Server::get_socket(void) const
+Socket		Server::get_socket(void) const
 {
 	return _socket;
 }
-const int		Server::get_port(void) const
+int		Server::get_port(void) const
 {
 	return _port;
 }
-const std::string	Server::get_password(void) const
+std::string	Server::get_password(void) const
 {
 	return _password;
 }
-const int		Server::get_nb_user(void) const
+int		Server::get_nb_user(void) const
 {
 	return _nb_user;
 }

@@ -12,7 +12,7 @@ INC_DIR = $(foreach dir, ./includes, -I$(dir))
 
 vpath %.cpp $(foreach dir, $(SRC_DIR), $(dir):)
 
-SRC = main.cpp socket.cpp server.cpp
+SRC = main.cpp socket.cpp server.cpp user.cpp
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
 

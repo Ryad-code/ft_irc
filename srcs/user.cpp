@@ -1,13 +1,19 @@
 #include "../includes/user.hpp"
 
+#include <stdlib.h>
+
 User::User(int socket, struct sockaddr_in address, std::string name, std::string nickname, std::string username) : _socket(socket), _address(address), _name(name), _nickname(nickname), _username(username)
 {
+	_buffer = (char*)malloc(sizeof(char) * 1024);
 	bzero(_buffer, 1024);
+	_connected = false;
 }
 
 User::~User(void) {}
 
 int			User::get_socket(void) const {return _socket;}
+
+char*			User::get_buffer(void) const {return _buffer;}
 
 struct sockaddr_in	User::get_address(void) const {return _address;}
 
@@ -17,4 +23,3 @@ std::string		User::get_nickname(void) const {return _nickname;}
 
 std::string		User::get_username(void) const {return _username;}
 
-//const std::queue<std::string> &User::get_request(void) const {return _request;}

@@ -30,7 +30,7 @@ class Server
 		std::string	get_password(void) const;
 		int		get_nb_user(void) const;
 
-		//Parsing connexion request
+		//Connexion request		
 		int		parse_connexion(int fd, struct sockaddr_in addr, std::string str);	
 
 		//FD_SET

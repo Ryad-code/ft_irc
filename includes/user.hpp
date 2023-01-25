@@ -15,12 +15,12 @@ class User
 {
 	private:
 		int				_socket;
-		char				_buffer[1024];
+		char*				_buffer;
 		struct sockaddr_in		_address;
 		std::string			_name;
 		std::string			_nickname;
 		std::string			_username;
-		//std::queue<std::string>		_request;
+		bool				_connected;
 
 	public:
 		//Constructor & Destructor
@@ -29,6 +29,7 @@ class User
 
 		//Getters
 		int			get_socket(void) const;
+		char*			get_buffer(void) const;
 		struct sockaddr_in	get_address(void) const;
 		std::string		get_name(void) const;
 		std::string		get_nickname(void) const;

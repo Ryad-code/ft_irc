@@ -10,7 +10,7 @@ int main (int ac, char **av)
 	res = new_server.start_server();
 	if (res < 0)
 	{
-		std::cout << "Ca marche pas\n";
+		std::cout << "ERROR\n";
 		return -1;
 	}
 

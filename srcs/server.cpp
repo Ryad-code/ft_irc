@@ -34,7 +34,7 @@ int			Server::parse_connexion(int fd, struct sockaddr_in addr, std::string str)
 	{
 		if (str.find(delimiter) > str.size())
 			break;
-		else
+		else//IF WE FIND THE DELIMITER
 		{
 			if (str.substr(0, str.find(" ")) == "CAP")
 				cap_ls = str.substr(str.find(" ") + 1, 2);
@@ -122,7 +122,7 @@ int			Server::start_server(void)
 				return -1;
 			}
 			//CREATING USER (Storing fd & address)
-			_user.push_back(User(new_fd, new_address, "", "", ""));
+			_user.push_back(User(new_fd, new_address, "", ""));
 			//INCREASING NB_USER
 			_nb_user++;
 			//READING IN USER_BUFFER

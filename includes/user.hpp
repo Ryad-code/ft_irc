@@ -17,24 +17,27 @@ class User
 		int				_socket;
 		char*				_buffer;
 		struct sockaddr_in		_address;
-		std::string			_name;
+		std::string			_cap_ls;
+		std::string			_pass;
 		std::string			_nickname;
 		std::string			_username;
 		bool				_connected;
 
 	public:
 		//Constructor & Destructor
-		User(int socket, struct sockaddr_in address, std::string name, std::string nickname, std::string username);
+		User(int socket, struct sockaddr_in address, std::string nickname, std::string username);
 		~User(void);
 
 		//Getters
-		int			get_socket(void) const;
-		char*			get_buffer(void) const;
-		struct sockaddr_in	get_address(void) const;
-		std::string		get_name(void) const;
-		std::string		get_nickname(void) const;
-		std::string		get_username(void) const;
+		int				get_socket(void) const;
+		char*				get_buffer(void) const;
+		struct sockaddr_in		get_address(void) const;
+		std::string			get_nickname(void) const;
+		std::string			get_username(void) const;
 		const std::queue<std::string>	&get_request(void) const;
+
+		//Parsing
+		int				parse_user(void);
 };
 
 #endif

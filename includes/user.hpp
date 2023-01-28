@@ -32,9 +32,10 @@ class User
 		int				get_socket(void) const;
 		char*				get_buffer(void) const;
 		struct sockaddr_in		get_address(void) const;
+		std::string			get_cap_ls(void) const;
+		std::string			get_pass(void) const;
 		std::string			get_nickname(void) const;
 		std::string			get_username(void) const;
-		const std::queue<std::string>	&get_request(void) const;
 
 		//Parsing
 		int				parse_user(void);

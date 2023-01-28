@@ -16,57 +16,6 @@ int			Server::get_port(void) const {return _port;}
 std::string		Server::get_password(void) const {return _password;}
 int			Server::get_nb_user(void) const {return _nb_user;}
 
-//Parsing connexion request
-int			Server::parse_connexion(int fd, struct sockaddr_in addr, std::string str)
-{	
-	std::string	cap_ls;
-	std::string	pass;
-	std::string	nick;
-	std::string	user;
-	std::string	delimiter = "\r\n";
-
-	//CAUTION
-	(void)fd;
-	(void)addr;
-
-	//PARSING
-	while (true)
-	{
-		if (str.find(delimiter) > str.size())
-			break;
-		else//IF WE FIND THE DELIMITER
-		{
-			if (str.substr(0, str.find(" ")) == "CAP")
-				cap_ls = str.substr(str.find(" ") + 1, 2);
-			else if (str.substr(0, str.find(" ")) == "PASS")
-				pass = str.substr(str.find(" ") + 1, str.find(delimiter) - 5);
-			else if (str.substr(0, str.find(" ")) == "NICK")
-				nick = str.substr(str.find(" ") + 1, str.find(delimiter) - 5);
-			else if (str.substr(0, str.find(" ")) == "USER")
-				user = str.substr(str.find(" ") + 1, str.find(delimiter) - 5);
-			else
-			{
-				std::cout << "Parsing Error2\n";
-				break;
-			}
-			str = str.substr(str.find(delimiter) + 2, str.size());
-		}
-	}
-	if (cap_ls.empty() == false)
-		std::cout << "|" << cap_ls << "|" << std::endl;
-	if (pass.empty() == false)
-		std::cout << "|" << pass << "|" << std::endl;
-	if (nick.empty() == false)
-		std::cout << "|" << nick << "|" << std::endl;
-	if (user.empty() == false)
-		std::cout << "|" << user << "|" << std::endl;
-	//If all fields are set
-	if (!pass.empty() && !nick.empty() && !user.empty())
-		std::cout << "NEW USER\n";
-	
-	return 0;
-}
-
 void			Server::update_sets(void)
 {
 	std::vector<User>::iterator it = _user.begin();
@@ -97,6 +46,7 @@ int			Server::start_server(void)
 		std::cout << "Error: failed to listen...\n";
 		return -1;
 	}
+//	for (int i = 0; i < 10; i++)
 	while (true)
 	{
 		//UPDATE FT_SETS
@@ -125,16 +75,24 @@ int			Server::start_server(void)
 			_user.push_back(User(new_fd, new_address, "", ""));
 			//INCREASING NB_USER
 			_nb_user++;
+		}
+		//CHECKING IF NEW CONNECTION IS READABLE
+		if (FD_ISSET(_user[_nb_user - 1].get_socket(), &_read_sockets))
+		{
 			//READING IN USER_BUFFER
-			if (read(new_fd, _user[_nb_user - 1].get_buffer(), sizeof(_buffer)) < 0)
+			if (read(_user[_nb_user - 1].get_socket(), _user[_nb_user - 1].get_buffer(), sizeof(_buffer)) < 0)
 				return -1;
 			//PARSING
 			std::string buffer = _user[_nb_user - 1].get_buffer();
-			parse_connexion(new_fd, new_address, buffer);
-			//bzero(_buffer, sizeof(_buffer));
+			_user[_nb_user - 1].parse_user();
 		}
 	}
-	std::cout << "--------------------------\n";
+//	std::cout << "--------------------------\n";
+//	std::cout << "nb_user = " << _nb_user << std::endl;
+//	std::cout << _user[_nb_user - 1].get_cap_ls() << std::endl;	
+//	std::cout << _user[_nb_user - 1].get_pass() << std::endl;
+//	std::cout << _user[_nb_user - 1].get_nickname() << std::endl;
+//	std::cout << _user[_nb_user - 1].get_username() << std::endl;
 
 //	shutdown(listening, 2);
 //	shutdown(accepting, 2);
